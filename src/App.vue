@@ -14,8 +14,8 @@ const newItemHighPriority = ref("false");
 
 <template>
   <h1> <i class="material-icons shopping-cart-icon">local_mall</i> {{ header }}</h1>
-  <div class="add-item form">
-    <input v-on:keyup.enter="items.push({id: items.length +1 , label: newItem})" v-model.trim="newItem" type="text" placeholder="Ingresar articulo 🛒"> 
+  <form v-on:submit.prevent="items.push({id: items.length +1 , label: newItem})" class="add-item form">
+    <input  v-model.trim="newItem" type="text" placeholder="Ingresar articulo 🛒"> 
 
 <!-- Crtl + k +c comentarios  shift + alt flecha abajo y copia  -->
 <!-- check boxes  -->
@@ -26,8 +26,8 @@ const newItemHighPriority = ref("false");
 
 {{ newItemHighPriority ? "🔅" : "🍪" }}
 <!-- boton  -->
-<button v-on:click="items.push({id: items.length +1 , label: newItem})" class="btn btn-primary">salvar articulo </button>
-  </div>
+<button  class="btn btn-primary">salvar articulo </button>
+</form>
 
   <ul>
     <li v-for="{ id, label } in items" v-bind:key="id">
