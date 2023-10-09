@@ -8,13 +8,19 @@ const items = ref([
   {id: 2, label: '1 jugo'},
   {id: 3, label: '4 galletas'}
 ]);
+//agregando metodo para guardaar nuevo articulo en la lista 
+const saveItem =()=> {
+  items.value.push({id: items.value.length +1 , label: newItem.value})
+  //limpiando el contenido de newItem
+  newItem.value = "";
+};
 const newItem = ref('');
 const newItemHighPriority = ref("false");
 </script>
 
 <template>
   <h1> <i class="material-icons shopping-cart-icon">local_mall</i> {{ header }}</h1>
-  <form v-on:submit.prevent="items.push({id: items.length +1 , label: newItem})" class="add-item form">
+  <form v-on:submit.prevent="saveItem" class="add-item form">
     <input  v-model.trim="newItem" type="text" placeholder="Ingresar articulo 🛒"> 
 
 <!-- Crtl + k +c comentarios  shift + alt flecha abajo y copia  -->
