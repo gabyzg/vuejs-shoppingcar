@@ -4,9 +4,9 @@ import { ref } from 'vue';
 const header = ref('Mi Carrito de Compras');
 
 const items = ref([
-  {id: 1, label: '3 Chocolates'},
-  {id: 2, label: '1 jugo'},
-  {id: 3, label: '4 galletas'}
+  // {id: 1, label: '3 Chocolates'},
+  // {id: 2, label: '1 jugo'},
+  // {id: 3, label: '4 galletas'}
 ]);
 //agregando metodo para guardaar nuevo articulo en la lista 
 const saveItem =()=> {
@@ -19,7 +19,11 @@ const newItemHighPriority = ref("false");
 </script>
 
 <template>
-  <h1> <i class="material-icons shopping-cart-icon">local_mall</i> {{ header }}</h1>
+  <div class="header">
+     <h1> <i class="material-icons shopping-cart-icon">local_mall</i> {{ header }}</h1>
+    <button class="btn">Cancelar</button>
+    <button class="btn btn-primary">agregar articulo</button>
+  </div>
   <form v-on:submit.prevent="saveItem" class="add-item form">
     <input  v-model.trim="newItem" type="text" placeholder="Ingresar articulo 🛒"> 
 
@@ -41,7 +45,7 @@ const newItemHighPriority = ref("false");
     </li>
   </ul>
   
-
+<p v-if= "items.length == 0 ">🥀 lista de compras vacia 🥀</p>
 
 
 </template>
