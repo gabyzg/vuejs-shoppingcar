@@ -15,16 +15,26 @@ const saveItem =()=> {
   newItem.value = "";
 };
 const newItem = ref('');
-const newItemHighPriority = ref("false");
+const newItemHighPriority = ref(false);
+const editing = ref(false);
+
+const doEdit = (edit) => {
+  //altero la variable editing
+  editing.value = edit;
+  //limpio el input de texto 
+  newItem.value = "";
+};
+
 </script>
 
 <template>
   <div class="header">
      <h1> <i class="material-icons shopping-cart-icon">local_mall</i> {{ header }}</h1>
-    <button class="btn">Cancelar</button>
-    <button class="btn btn-primary">agregar articulo</button>
+     <button v-if="!editing" @click="doEdit(true)" class="btn btn-primary">agregar articulo</button>
+    <button  v-else   @click="doEdit(false)" class="btn">Cancelar</button>
+  
   </div>
-  <form v-on:submit.prevent="saveItem" class="add-item form">
+  <form v-if="editing" v-on:submit.prevent="saveItem" class="add-item form">
     <input  v-model.trim="newItem" type="text" placeholder="Ingresar articulo 🛒"> 
 
 <!-- Crtl + k +c comentarios  shift + alt flecha abajo y copia  -->
