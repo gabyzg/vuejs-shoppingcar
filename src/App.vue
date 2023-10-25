@@ -4,12 +4,19 @@ import { ref } from 'vue';
 const header = ref('Mi Carrito de Compras');
 
 const items = ref([
-  // {id: 1, label: '3 Chocolates'},
-  // {id: 2, label: '1 jugo'},
-  // {id: 3, label: '4 galletas'}
+  // ctr + k + u para descomentar
+  {id: 1, label: '3 Chocolates', purchased: true, highPriority: true} ,
+  {id: 2, label: '1 jugo', purchased: false,  highPriority: true},
+  {id: 3, label: '4 galletas', purchased: true,  highPriority: false}
 ]);
+//funcion que alterna el estado de compredo de un item 
+const togglePurchased = (item) => {
+  //invertir la propiedad purchased
+  item.purchased = !item.purchased;
+ }
+
 //agregando metodo para guardaar nuevo articulo en la lista 
-const saveItem =()=> {
+const saveItem =() => {
   items.value.push({id: items.value.length +1 , label: newItem.value})
   //limpiando el contenido de newItem
   newItem.value = "";
@@ -25,6 +32,7 @@ const doEdit = (edit) => {
   newItem.value = "";
 };
 
+ 
 </script>
 
 <template>
@@ -34,7 +42,7 @@ const doEdit = (edit) => {
     <button  v-else   @click="doEdit(false)" class="btn">Cancelar</button>
   
   </div>
-  <form v-if="editing" v-on:submit.prevent="saveItem" class="add-item form">
+  <form v-if="editing" v-on:submit.prevent="saveItem" class="add-item form" >
     <input  v-model.trim="newItem" type="text" placeholder="Ingresar articulo 🛒"> 
 
 <!-- Crtl + k +c comentarios  shift + alt flecha abajo y copia  -->
@@ -46,11 +54,15 @@ const doEdit = (edit) => {
 
 {{ newItemHighPriority ? "🔅" : "🍪" }}
 <!-- boton  -->
-<button  class="btn btn-primary">salvar articulo </button>
+<button :disabled="newItem.length === 0" class="btn btn-primary">salvar articulo </button>
 </form>
 
   <ul>
-    <li v-for="{ id, label } in items" v-bind:key="id">
+    <li
+     v-for="({ id, label, purchased, highPriority }, index ) in items" v-bind:key="id"
+     :class="{ strikeout : purchased,  priority : highPriority}"
+     @click="togglePurchased(items[index])"
+     >
       🔹 {{ label }}
     </li>
   </ul>
