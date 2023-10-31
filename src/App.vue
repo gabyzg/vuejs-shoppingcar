@@ -1,6 +1,6 @@
 <script setup>
 
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 const header = ref('Mi Carrito de Compras');
 
 const items = ref([
@@ -32,6 +32,15 @@ const doEdit = (edit) => {
   newItem.value = "";
 };
 
+
+// Creando una propiedad computada
+const characterCount = computed(()=>{
+  // Toda propiedad computada debe regresar un valor
+  return newItem.value.length;
+});
+
+// Creando propiedad computada que invierte items de la lista
+const reversedItems = computed(() => [...items.value].reverse());
  
 </script>
 
@@ -55,13 +64,18 @@ const doEdit = (edit) => {
 {{ newItemHighPriority ? "🔅" : "🍪" }}
 <!-- boton  -->
 <button :disabled="newItem.length === 0" class="btn btn-primary">salvar articulo </button>
+
+<!-- Contador -->
+<p class="counter">
+    {{ characterCount }} / 200
+  </p>
 </form>
 
   <ul>
     <li
-     v-for="({ id, label, purchased, highPriority }, index ) in items" v-bind:key="id"
+     v-for="({ id, label, purchased, highPriority }, index ) in reversedItems" v-bind:key="id"
      :class="{ strikeout : purchased,  priority : highPriority}"
-     @click="togglePurchased(items[index])"
+     @click="togglePurchased(reversedItems[index])"
      >
       🔹 {{ label }}
     </li>
